@@ -35,6 +35,59 @@ Outputs include:
 
 ---
 
+## Approaches for Task C (PoT)
+
+`C_APPROACH` options (used after `C_PROJ_START_EPOCH`):
+
+- **`ema`**: Exponential-moving blend toward nearest ±2^k (gentle, default).
+- **`snap_epoch`**: Hard snap at end of each epoch during PoT phase.
+- **`snap_step`**: Hard snap every N steps (`C_PROJ_EVERY_N_STEPS`).
+- **`stochastic`**: Stochastic rounding between neighbor exponents.
+- **`row_shared`**: Per-row shared exponent for 2D weights.
+- **`apot2`**: Approximate as sum of two powers of two (±2^k1 ± 2^k2).
+- **`mixed_pot`**: Apply PoT to RNN weights only; keep fc/bias float (`C_TARGET_SCOPE="rnn_only"`).
+- **`inq`**: Incremental Network Quantization-style staging (progressively freeze top-|w|%).
+
+Optional **KD** (knowledge distillation) for any C_* approach:
+- `KD_ENABLE=True`, with `KD_TAU`, `KD_ALPHA` controlling soft loss mix.
+
+---
+
+## Repository Layout
+
+.
+├─ fsdd_trainer.py # main script (paste the provided code)
+├─ requirements.txt # minimal dependencies
+├─ README.md # this file
+└─ free-spoken-digit-dataset/ (downloaded separately; see Dataset)
+└─ recordings/ # .wav files live here
+
+---
+
+> **GPU note:** If you use CUDA, prefer installing the correct PyTorch build from https://pytorch.org/get-started/locally/ and then keep the rest of the requirements as-is.
+
+---
+
+## Quickstart
+
+```bash
+# 0) (Optional) Create a virtual environment
+python -m venv .venv
+# Windows: .venv\Scripts\activate
+# macOS/Linux:
+source .venv/bin/activate
+
+# 1) Install dependencies
+pip install -r requirements.txt
+
+# 2) Get the dataset (FSDD) next to this repo
+git clone https://github.com/Jakobovski/free-spoken-digit-dataset.git
+
+# 3) Run (defaults are set at top of script)
+python fsdd_trainer.py
+
+---
+
 ## ⚙️ Requirements
 
 Install dependencies with:
