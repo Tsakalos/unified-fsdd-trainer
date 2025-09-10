@@ -1,25 +1,43 @@
 # Unified FSDD Trainer — GRU vs LSTM (GPU-optimized)
 
-Compare GRU and LSTM on the Free Spoken Digit Dataset (FSDD) with deterministic runs, light augmentation, and optional constraints:
-- **Tasks**: A (baseline), B1 (36 kB/layer), B2 (INT8 dynamic quant), C (Power-of-two weights w/ multiple approaches)
-- **Preproc**: MFCC-20 (torchaudio) or MFCC-39 (librosa Δ/ΔΔ)
-- **Outputs**: training curves, confusion matrix, metrics table, flowchart
+This repository provides a **unified training pipeline** for the [Free Spoken Digit Dataset (FSDD)](https://github.com/Jakobovski/free-spoken-digit-dataset), allowing you to **compare GRU vs LSTM** models under different constraints:
 
-## Quickstart
+- **Deterministic training** (seed control, reproducibility)
+- **Light augmentation** (SpecAugment-like masking)
+- **CUDA optimizations** (AMP, TF32, cuDNN tweaks)
+- **Multiple experimental tasks** (A, B1, B2, C)
+
+Outputs include:
+- **Training curves**
+- **Confusion matrices**
+- **Metrics tables**
+- **Flowchart of the pipeline**
+
+---
+
+## 📂 Tasks
+
+| Task | Description |
+|------|-------------|
+| **A** | Baseline — no constraints |
+| **B1** | Each recurrent layer limited to **36 kB memory** (hidden size auto-calculated) |
+| **B2** | B1 + **integer-only inference** (dynamic INT8 quantization of RNN/Linear; evaluated on CPU) |
+| **C**  | **Power-of-two weights (projection)** starting from B1 topology.<br>Supports multiple approaches: `ema`, `snap_epoch`, `snap_step`, `stochastic`, `inq`, `row_shared`, `apot2`, `mixed_pot`. Knowledge distillation (KD) optional. |
+
+---
+
+## 🧩 Models & Features
+
+- **Models:** `gru`, `lstm`, or `both` (compare side-by-side)
+- **Features:**
+  - `mfcc20` (20-dim MFCC via torchaudio)
+  - `mfcc39` (39-dim MFCC + Δ/ΔΔ via librosa)
+
+---
+
+## ⚙️ Requirements
+
+Install dependencies with:
 
 ```bash
-# 1) Create and activate a virtual env (optional but recommended)
-python -m venv .venv
-# Windows: .venv\Scripts\activate
-# macOS/Linux:
-source .venv/bin/activate
-
-# 2) Install deps
 pip install -r requirements.txt
-
-# 3) Get the dataset (FSDD) and set the path
-# Clone the dataset into ./free-spoken-digit-dataset
-git clone https://github.com/Jakobovski/free-spoken-digit-dataset.git
-
-# 4) Run
-python fsdd_trainer.py
