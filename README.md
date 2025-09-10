@@ -85,12 +85,3 @@ git clone https://github.com/Jakobovski/free-spoken-digit-dataset.git
 
 # 3) Run (defaults are set at top of script)
 python fsdd_trainer.py
-
----
-
-## ⚙️ Requirements
-
-Install dependencies with:
-
-```bash
-pip install -r requirements.txt
