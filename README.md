@@ -53,17 +53,6 @@ Optional **KD** (knowledge distillation) for any C_* approach:
 
 ---
 
-## Repository Layout
-
-.
-├─ fsdd_trainer.py # main script (paste the provided code)
-├─ requirements.txt # minimal dependencies
-├─ README.md # this file
-└─ free-spoken-digit-dataset/ (downloaded separately; see Dataset)
-└─ recordings/ # .wav files live here
-
----
-
 > **GPU note:** If you use CUDA, prefer installing the correct PyTorch build from https://pytorch.org/get-started/locally/ and then keep the rest of the requirements as-is.
 
 ---
