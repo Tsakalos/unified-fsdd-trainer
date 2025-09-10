@@ -1,0 +1,14 @@
+torch
+torchaudio
+numpy
+matplotlib
+cycler
+pyparsing
+python-dateutil
+pytz
+scipy
+six
+wheel
+tornado
+soundfile
+librosa
